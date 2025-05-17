@@ -32,19 +32,19 @@ Group 21: Jayant Dulani, Ishita Gupta, Pranish Somyajula (Git link)
 
 
 
-PROBLEM & MOTIVATION:
+### PROBLEM & MOTIVATION:
 
 Credit card fraud has increased as the world slowly becomes cashless and electronic transactions continue to rise. Our project aims to detect fraudulent credit card transactions in real time using AI models trained on both everyday and fraudulent transactions. The problem is not only fascinating but also challenging, as it involves working with extremely large datasets in which fraudulent transactions make up only a small fraction. It requires a system that can adapt to evolving fraud techniques and give accurate results.
 If we were to explain our solution to a non-AI individual then we would say we have trained AI models that learn from past transactions, involving both everyday and fraudulent activities, to flag those that seem suspicious. Similar to how a bank flags a transaction that appears suspicious, our AI models do the same; after flagging it, the transaction would be sent to a human for review to give the final verdict. For instance, if a user made a transaction in the United States today and another transaction appears in his account in Brazil a few minutes later, this would be flagged as suspicious by our AI due to the unusual instant location change. Additionally, we're implementing blockchain technology—a tamper-evident digital record book—to securely log flagged transactions, ensuring that it's not possible for fraudsters to cover their tracks. This technology would also facilitate the use of cryptocurrencies in everyday transactions!
 Our solution aims to protect financial institutions by cutting fraud-related losses, credit card holders by protecting them from unauthorized transactions, and merchants by reducing chargebacks and disputes.
 However, training AI models is not perfect, and there are many factors to take into consideration while training them. AI models could be trained infinitely, and still, they wouldn't be 100% accurate, and we have to decide where to lean—more bias or more variance. This trade-off is the classic bias-variance dilemma. Pushing the model toward lower bias (fitting the data very closely) risks overfitting, where it memorizes noise and performs poorly on new transactions. Leaning toward higher variance (strong regularization or simpler models) can leave persistent systematic errors uncorrected. Our aim is to define a model that finds the sweet spot and performs well on both trained data and unseen data—a balance we tune through cross-validation, regularization strength, and careful threshold selection.
 
-NOVELTY
+### NOVELTY
 Our solution's novelty is merging machine learning techniques with blockchain for immutable fraud logging. Other applications of machine learning-based fraud detection lack this novelty; however, our solution provides a security and transparency layer using blockchain technology.  This goal achieves two objectives at once, as blockchain also facilitates cryptocurrencies.
 Our solution originally derives from the growing efficacy of machine learning to detect anomalies, the transparency and immutability of blockchain in handling private financial information, already being used in cryptocurrency, and the need for faster fraud detection equipment in fintech to help keep pace with evolving fraud techniques that traditional rule-based systems often miss. We believe this approach would succeed because machine learning excels at detecting patterns in large, high-dimensional data sets (The benefits outweigh the risks here), and supervised learning with well-balanced classes can manage the imbalance present in fraud datasets. Moreover, blockchain enables tamper-evident logging, injecting accountability into the system. Altogether, this hybrid approach addresses both detection and secure record-keeping issues.
 
 
-PROGRESS MODIFICATIONS
+### PROGRESS MODIFICATIONS
 At first, we intended to proceed with an unsupervised approach as unsupervised learning uses unlabeled data to discover patterns and structures. However, as we looked more into the data, it became clear that a supervised model could be more effective, as training the model with labeled data would help it make more accurate predictions. Thus, we decided to use Logistic Regression instead.
 Through multiple modeling trials, we discovered two additional refinements.  First, standardizing the Amount and Time features gave every model a measurable lift. Second, instead of the default 0.50 cut‑off, we chose a probability threshold that maximized the precision-recall balance, leading to fewer false alarms.
 We tackled the machine‑learning pipeline on the implementation side first, then treated blockchain integration as a distinct second phase. We also tightened our test plan: hitting roughly 80 % accuracy became the acceptance gate to ensure that any remaining false positives caused minimal customer friction.
@@ -78,7 +78,7 @@ End‑to‑end latency: 31 ms average per transaction All 43 flagged transacti
 The following artifacts accompany this report and can be found in the linked GitLab repository: train_model.py (Isolation Forest baseline); train_model_supervised.py, model_supervised.pkl, and threshold.txt (final supervised pipeline); api_service/ Dockerised FastAPI scorer; contracts/ containing FraudLog.sol and deployment scripts; detect_and_log.py (ML → blockchain bridge); plus screenshots of the confusion matrices, ROC/PR curves, and Hardhat event logs.
 Overall, migrating from an unsupervised anomaly detector to a class‑weighted supervised model lifted fraud‑precision from 3.8 % to 79.2 % while retaining > 80 % recall, and the on‑chain logger proved that secure, verifiable record‑keeping adds negligible overhead.
 
-DISCUSSION: 
+### DISCUSSION: 
 Our supervised model shows a clear jump in quality over the unsupervised baseline. On the static test split, it reached 79 % precision and 82 % recall. During a live replay of 50,000 transactions, it kept 93 % precision and answered in about 31 ms—quick enough for real‑time checkout. Seven frauds slipped through, and only three genuine payments were blocked, numbers small enough that most banks would accept the trade‑off.
 We drew four simple lessons while building the prototype. 
 (1) Class‑weighting beats data cloning, giving extra weight to the rare fraud rows, which worked better than SMOTE oversampling. 
@@ -89,7 +89,7 @@ A few risks still need care. Buying habits will change, so we will retrain eve
 If rolled out widely, the system could save banks millions in chargebacks and make online shopping feel safer. Yet too many false alarms could push customers toward untraceable payment methods. Keeping sensible thresholds, clear explanations, and a human review loop will be key to gaining the benefits without losing user trust.
 
 
-PROGRESS REFLECTION:
+### PROGRESS REFLECTION:
 We set out to show that machine learning plus blockchain can spot and track credit‑card fraud, and we got there. We tried a few models, settled on a supervised one with a solid precision‑recall balance, wired up a lightweight FraudLog contract, and wrote clean Python scripts that would move straight into a real codebase.
 There’s still room to grow. The contract isn’t live on a public chain yet, deeper models (beyond logistic regression) might squeeze out more recall, and a small web dashboard would make life easier for analysts. Implementing real‑time streaming would allow the system to keep pace with production traffic.
 The steps are clear: ship the smart contract to a real network, bolt on a GUI, test boosted trees or neural nets, and run the whole stack on bigger, more varied datasets.
@@ -109,7 +109,7 @@ Model evaluation and metrics analysis
 Documentation and reporting
 The project design and  concept development received contributions from all team members. Jayant developed the high-precision supervised model pipeline and  blockchain integration script which served as the technical foundation for our solution. While Ishita and Pranish, worked on training the AI model and obtaining accuracy thoroughly for the implementation of the fraud-detection using the credit card dataset.
 
-CITATIONS
+### CITATIONS
 Biewald, L. (2020). Experiment Tracking with Weights and Biases. Software available from wandb.com.
 Chawla, N. V., Bowyer, K. W., Hall, L. O., & Kegelmeyer, W. P. (2002). SMOTE: Synthetic Minority Over‑sampling Technique. Journal of Artificial Intelligence Research, 16, 321‑357 
 European Parliament & Council. (2024). Regulation (EU) 2024/XXXX on artificial intelligence (“AI Act”). Official Journal of the European Union.
