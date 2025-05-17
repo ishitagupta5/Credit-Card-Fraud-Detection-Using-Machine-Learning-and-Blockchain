@@ -24,6 +24,7 @@ npx hardhat run scripts/deploy.js --network localhost
 # 5 – Detect & log (sample 1000 rows)
 python detect_and_log.py --contract 0xABC... --sample 1000
 
+```
 
 ## Report
 Credit Card Fraud Detection Using Machine Learning and Blockchain
